@@ -1,10 +1,15 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { get } from './http';
+import { createLogger } from 'redux-logger';
+
+import { store } from './store';
 
 import newMessageAction from './actions/newMessageAction';
 import updateStatusAction from './actions/updateStatusAction';
 
 import userAction from './constants/userAction';
 import userStatus from './constants/userStatus';
+import serverStatus from './constants/serverStatus';
 
 const defaultState = {
     messages: [
@@ -15,40 +20,15 @@ const defaultState = {
         },
     ],
     connectionStatus: userStatus.ONLINE,
+    apiCommunicationStatus: serverStatus.READY,
 }
-
-const connectionStatusReducer = (state = defaultState.connectionStatus, {type, value}) => {
-    switch(type) {
-        case userAction.UPDATE_STATUS:
-            return value;
-            break;
-    }
-
-    return state;
-}
-
-const messagesReducer = (state = defaultState.messages, {type, value, postBy, date}) => {
-    switch(type) {
-        case userAction.CREATE_NEW_MESSAGE:
-            // the state is immutable so return a new element with the new values and the existing state.
-            const newState = [{date, postBy, content: value}, ...state];
-            return newState;
-            break;
-    }
-
-    return state;
-}
-
-const combinedReducer = combineReducers({
-    connectionStatus: connectionStatusReducer,
-    messages: messagesReducer,
-})
-
-// Pass the combined reducers into the store
-const store = createStore(combinedReducer);
 
 const render = () => {
-    const {messages, connectionStatus} = store.getState();
+    const {
+        messages,
+        connectionStatus,
+        apiCommunicationStatus
+    } = store.getState();
 
     document.getElementById('messages').innerHTML = messages
         .sort((a, b) => b.date - a.date)
@@ -58,8 +38,11 @@ const render = () => {
             </div>
         `)).join('');
 
-    document.forms.newMessage.fields.disabled = (connectionStatus == userStatus.OFFLINE);
-    document.forms.newMessage.newMessage.value = '';
+        document.forms.newMessage.newMessage.value = '';
+        document.forms.newMessage.fields.disabled = (
+            connectionStatus == userStatus.OFFLINE ||
+            apiCommunicationStatus == serverStatus.WAITING
+        );
 }
 
 document.forms.selectStatus.status.addEventListener('change', (event) => {

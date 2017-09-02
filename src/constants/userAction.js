@@ -1,0 +1,4 @@
+export default {
+    UPDATE_STATUS: 'UPDATE_STATUS',
+    CREATE_NEW_MESSAGE: 'CREATE_NEW_MESSAGE',
+}

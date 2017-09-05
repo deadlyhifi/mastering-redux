@@ -1,3 +1,7 @@
+# Example Work from Pluralsight - [Mastering Flux and Redux](https://www.pluralsight.com/courses/flux-redux-mastering)
+
+I worked through it, I changed some stuff. I like Redux. I do have some architecture things to think about.
+
 # Flux-Redux Exemplar
 
 ## Getting started

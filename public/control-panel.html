@@ -27,15 +27,15 @@
         Welcome, <span id=userName>Jim!</span>
     </p>
 
-    <form class="form-inline">
+    <form class="form-inline" id="userPreferences">
         <input type="text" class="form-control" id=userNameInput placeholder="Update Your Username">
     </form>
     <form name="fontSizeForm">
         <h4>
             Font size:
         </h4>
-        <input type="radio" name="fontSize" value="large" checked> Large<br>
-        <input type="radio" name="fontSize" value="small"> Small<br>
+        <input type="radio" name="fontSize" id="fontLarge" value="large" checked> <label for="fontLarge">Large</label><br>
+        <input type="radio" name="fontSize" id="fontSmall" value="small"> <label for="fontSmall">Small</label>
     </form>
     </form>
 </section>

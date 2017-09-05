@@ -1,7 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { get } from './http';
-import { createLogger } from 'redux-logger';
-
 import { store } from './store';
 
 import newMessageAction from './actions/newMessageAction';
@@ -10,18 +7,6 @@ import updateStatusAction from './actions/updateStatusAction';
 import userAction from './constants/userAction';
 import userStatus from './constants/userStatus';
 import serverStatus from './constants/serverStatus';
-
-const defaultState = {
-    messages: [
-        {
-            date: new Date(),
-            postBy: 'Hello',
-            content: 'Write something cheeky',
-        },
-    ],
-    connectionStatus: userStatus.ONLINE,
-    apiCommunicationStatus: serverStatus.READY,
-}
 
 const render = () => {
     const {

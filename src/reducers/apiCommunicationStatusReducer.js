@@ -1,7 +1,11 @@
 import userAction from './../constants/userAction';
 import serverStatus from './../constants/serverStatus';
 
-export default (state = [] /*defaultState.apiCommunicationStatus*/, {type}) => {
+const defaultState = {
+    apiCommunicationStatus: serverStatus.READY
+}
+
+export default (state = defaultState.apiCommunicationStatus, {type}) => {
     switch(type) {
         case userAction.CREATE_NEW_MESSAGE:
             return serverStatus.WAITING;

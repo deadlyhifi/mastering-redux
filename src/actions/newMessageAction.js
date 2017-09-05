@@ -4,7 +4,7 @@ import { get } from './../http';
 import userAction from './../constants/userAction';
 import serverStatus from './../constants/serverStatus';
 
-export default (content, postBy) => {
+export default (content, postBy, userConnectionStatus) => {
     const date = new Date();
 
     get('api/create', (id) => {
@@ -18,5 +18,6 @@ export default (content, postBy) => {
         value: content,
         postBy,
         date,
+        userConnectionStatus,
     }
 }

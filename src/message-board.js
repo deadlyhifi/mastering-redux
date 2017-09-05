@@ -19,7 +19,7 @@ const render = () => {
         .sort((a, b) => b.date - a.date)
         .map(message => (`
             <div>
-                ${message.postBy} : ${message.content}
+                ${message.postBy}: ${message.content} <small>${message.userConnectionStatus}</small>
             </div>
         `)).join('');
 
@@ -28,6 +28,10 @@ const render = () => {
             connectionStatus == userStatus.OFFLINE ||
             apiCommunicationStatus == serverStatus.WAITING
         );
+
+        if (! document.forms.newMessage.fields.disabled) {
+            document.forms.newMessage.newMessage.focus();
+        }
 }
 
 document.forms.selectStatus.status.addEventListener('change', (event) => {
@@ -41,9 +45,11 @@ document.forms.newMessage.addEventListener('submit', (event) => {
 
     const value = event.target.newMessage.value ? event.target.newMessage.value : null;
     const userName = localStorage['preferences'] ? JSON.parse(localStorage['preferences']).userName : 'New User';
+    const { connectionStatus } = store.getState();
 
+    console.log('state', connectionStatus, store.getState());
     if (value) {
-        store.dispatch(newMessageAction(value, userName));
+        store.dispatch(newMessageAction(value, userName, connectionStatus));
     }
 })
 

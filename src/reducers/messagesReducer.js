@@ -8,17 +8,17 @@ const defaultState = {
             date: new Date(),
             postBy: 'Hello',
             content: 'Write something cheeky',
+            userConnectionStatus: userStatus.ONLINE,
         },
-    ],
-    connectionStatus: userStatus.ONLINE,
-    apiCommunicationStatus: serverStatus.READY,
+    ]
 }
 
-export default (state = defaultState.messages, {type, value, postBy, date}) => {
+export default (state = defaultState.messages, {type, value, postBy, date, userConnectionStatus}) => {
+    console.log(type, value, postBy, date, userConnectionStatus);
     switch(type) {
         case userAction.CREATE_NEW_MESSAGE:
             // the state is immutable so return a new element with the new values and the existing state.
-            const newState = [{date, postBy, content: value}, ...state];
+            const newState = [{date, postBy, userConnectionStatus, content: value}, ...state];
             return newState;
             break;
     }

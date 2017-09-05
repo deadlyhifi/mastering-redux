@@ -1,4 +1,3 @@
-import { store } from './../store';
 import userPreference from './../constants/userPreference';
 
 export default (name) => {
